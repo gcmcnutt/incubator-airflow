@@ -43,8 +43,8 @@ spec:
     spec:
       initContainers:
       - name: "init"
-        image: airflow
-        imagePullPolicy: IfNotPresent
+        image: 621123821552.dkr.ecr.us-west-2.amazonaws.com/gmcnutt:airflow1
+        imagePullPolicy: Always
         volumeMounts:
         - name: airflow-configmap
           mountPath: /root/airflow/airflow.cfg
@@ -66,8 +66,8 @@ spec:
           - "./tmp/airflow-test-env-init.sh"
       containers:
       - name: webserver
-        image: airflow
-        imagePullPolicy: IfNotPresent
+        image: 621123821552.dkr.ecr.us-west-2.amazonaws.com/gmcnutt:airflow1
+        imagePullPolicy: Always
         ports:
         - name: webserver
           containerPort: 8080
@@ -105,8 +105,8 @@ spec:
 #            path: /login
 #            port: 8080
       - name: scheduler
-        image: airflow
-        imagePullPolicy: IfNotPresent
+        image: 621123821552.dkr.ecr.us-west-2.amazonaws.com/gmcnutt:airflow1
+        imagePullPolicy: Always
         args: ["scheduler"]
         env:
         - name: AIRFLOW_KUBE_NAMESPACE
@@ -144,11 +144,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: airflow
+  annotations:
+     service.beta.kubernetes.io/aws-load-balancer-internal: '0.0.0.0/0'
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 8080
-      nodePort: 30809
   selector:
     name: airflow
 

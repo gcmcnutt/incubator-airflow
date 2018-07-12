@@ -25,7 +25,7 @@ data:
     dags_folder = /root/airflow/dags
     base_log_folder = /root/airflow/logs
     logging_level = INFO
-    executor = KubernetesExecutor
+    executor = LocalExecutor
     parallelism = 32
     load_examples = True
     plugins_folder = /root/airflow/plugins

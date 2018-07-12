@@ -23,11 +23,12 @@ metadata:
   name: airflow-dags
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 2Gi
-  hostPath:
-    path: /airflow-dags/
+  nfs:
+    server: fs-50127af9.efs.us-west-2.amazonaws.com
+    path: /airflow-dags
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -39,6 +40,8 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  volumeName: airflow-dags
+  storageClassName: ""
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -49,8 +52,9 @@ spec:
     - ReadWriteMany
   capacity:
     storage: 2Gi
-  hostPath:
-    path: /airflow-logs/
+  nfs:
+    server: fs-50127af9.efs.us-west-2.amazonaws.com
+    path: /airflow-logs
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -62,6 +66,8 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  volumeName: airflow-logs
+  storageClassName: ""
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -69,11 +75,12 @@ metadata:
   name: test-volume
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   capacity:
     storage: 2Gi
-  hostPath:
-    path: /airflow-dags/
+  nfs:
+    server: fs-50127af9.efs.us-west-2.amazonaws.com
+    path: /test-volume
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -85,3 +92,5 @@ spec:
   resources:
     requests:
       storage: 2Gi
+  volumeName: test-volume
+  storageClassName: ""

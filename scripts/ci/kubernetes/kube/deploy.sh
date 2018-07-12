@@ -24,6 +24,8 @@ DIRNAME=$(cd "$(dirname "$0")"; pwd)
 kubectl delete -f $DIRNAME/postgres.yaml
 kubectl delete -f $DIRNAME/airflow.yaml
 kubectl delete -f $DIRNAME/secrets.yaml
+kubectl delete -f $DIRNAME/configmaps.yaml
+kubectl delete -f $DIRNAME/volumes.yaml
 
 kubectl apply -f $DIRNAME/secrets.yaml
 kubectl apply -f $DIRNAME/configmaps.yaml
